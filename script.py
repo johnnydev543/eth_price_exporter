@@ -6,7 +6,7 @@ import json
 
 URL = "https://api.coingecko.com/api/v3/simple/price?ids=ethereum&vs_currencies=usd"
 
-class BinanceAPICollector(object):
+class CoingeckoAPICollector(object):
 
     def collect(self):
 
@@ -24,7 +24,7 @@ class BinanceAPICollector(object):
 
 if __name__ == "__main__":
 
-    REGISTRY.register(BinanceAPICollector())
+    REGISTRY.register(CoingeckoAPICollector())
     start_http_server(5000)
     while True:
         time.sleep(10)
