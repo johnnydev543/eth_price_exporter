@@ -23,7 +23,7 @@ class CoingeckoAPICollector(object):
             try:
                 response = session.get(URL, timeout=3)
                 if response.ok:
-                    request_succeeded = False
+                    request_succeeded = True
                     price = response.json()['ethereum']['usd']
                     price_metric.add_metric(['coingecko'], price)
 
