@@ -18,20 +18,17 @@ class CoingeckoAPICollector(object):
         )
 
         session = requests.Session()
-        request_succeeded = False
         for _ in range(3):
             try:
                 response = session.get(URL, timeout=3)
                 if response.ok:
-                    request_succeeded = True
                     price = response.json()['ethereum']['usd']
                     price_metric.add_metric(['coingecko'], price)
 
             except requests.exceptions.ConnectTimeout:
-                time.sleep(3)
-        if False == request_succeeded:
-            now = datetime.now()
-            print(now.strftime("%d/%m/%Y %H:%M:%S"), "Failed to request")
+                now = datetime.now()
+                print(now.strftime("%d/%m/%Y %H:%M:%S"), "Failed to request")
+                time.sleep(12)
 
         yield price_metric
 
