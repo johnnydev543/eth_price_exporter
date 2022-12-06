@@ -27,11 +27,11 @@ class CoingeckoAPICollector(object):
                     price_metric.add_metric(['coingecko'], price)
             except requests.exceptions.ConnectionError:
                 now = datetime.now()
-                print(now.strftime("%d/%m/%Y %H:%M:%S"), "Except: ConnectionError")
+                print(now.strftime("%Y-%m-%d %H:%M:%S"), "Except: ConnectionError")
                 time.sleep(60)
             except requests.exceptions.ConnectTimeout:
                 now = datetime.now()
-                print(now.strftime("%d/%m/%Y %H:%M:%S"), "Except: ConnectTimeout")
+                print(now.strftime("%Y-%m-%d %H:%M:%S"), "Except: ConnectTimeout")
                 time.sleep(3)
 
         yield price_metric
