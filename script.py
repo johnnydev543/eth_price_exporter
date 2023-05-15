@@ -28,7 +28,7 @@ class CoingeckoAPICollector(object):
             except requests.exceptions.ConnectionError:
                 now = datetime.now()
                 print(now.strftime("%Y-%m-%d %H:%M:%S"), "Except: ConnectionError")
-                time.sleep(60)
+                time.sleep(600)
             except requests.exceptions.ConnectTimeout:
                 now = datetime.now()
                 print(now.strftime("%Y-%m-%d %H:%M:%S"), "Except: ConnectTimeout")
