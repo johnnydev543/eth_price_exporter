@@ -32,7 +32,7 @@ class CoingeckoAPICollector(object):
             except requests.exceptions.ConnectTimeout:
                 now = datetime.now()
                 print(now.strftime("%Y-%m-%d %H:%M:%S"), "Except: ConnectTimeout")
-                time.sleep(3)
+                time.sleep(60)
 
         yield price_metric
 
