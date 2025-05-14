@@ -7,7 +7,7 @@ from datetime import datetime
 
 # URL_ETH_PRICE = "https://api.coingecko.com/api/v3/simple/price?ids=ethereum&vs_currencies=usd"
 URL_BINANCE_ETH_PRICE = "https://api.binance.com/api/v3/ticker/price?symbol=ETHUSDT"
-URL_BINANCE_USDT_APR  = "https://www.binance.com/bapi/earn/v1/friendly/finance-earn/simple-earn/homepage/details?asset=USDT"
+URL_BINANCE_USDT_APR  = "https://www.binance.com/bapi/margin/v1/friendly/flexibleLoan/isolated/new/config/coinConfig?collateralCoin=USDT&loanCoin=USDT"
 
 class DataCollector(object):
 
@@ -20,8 +20,14 @@ class DataCollector(object):
         )
 
         usdt_apr_metric = GaugeMetricFamily(
-            'usdt_apr',
+            'usdt_marketApr',
             'USDT Savings Market APR',
+            labels=['exchange']
+        )
+
+        usdt_loan_annualInterestRate = GaugeMetricFamily(
+            'usdt_loan_annualInterestRate',
+            'USDT laon Annual Interest Rate',
             labels=['exchange']
         )
 
@@ -46,9 +52,11 @@ class DataCollector(object):
         try:
             response = session.get(URL_BINANCE_USDT_APR, timeout=3)
             if response.ok:
-                marketapr = response.json()['data']['list'][0]['productDetailList'][0].get('marketApr')
+                marketApr = response.json()['data']['collateralConfig'].get('marketApr')
+                annualInterestRate = response.json()['data']['loanConfig'].get('annualInterestRate')
                 # print(marketapr)
-                usdt_apr_metric.add_metric(['binance'], marketapr)
+                usdt_apr_metric.add_metric(['binance'], marketApr)
+                usdt_loan_annualInterestRate.add_metric('binance', annualInterestRate)
         except requests.exceptions.ConnectionError:
             now = datetime.now()
             print(now.strftime("%Y-%m-%d %H:%M:%S"), "Except: ConnectionError")
@@ -60,6 +68,7 @@ class DataCollector(object):
             
         yield eth_price_metric
         yield usdt_apr_metric
+        yield usdt_loan_annualInterestRate
 
 if __name__ == "__main__":
 
