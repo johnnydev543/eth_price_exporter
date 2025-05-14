@@ -20,8 +20,8 @@ class DataCollector(object):
         )
 
         usdt_apr_metric = GaugeMetricFamily(
-            'binance_usdt_apr',
-            'Binance USDT APR',
+            'usdt_apr',
+            'USDT Savings Market APR',
             labels=['exchange']
         )
 
