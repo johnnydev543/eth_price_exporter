@@ -33,7 +33,7 @@ class DataCollector(object):
                 # price = response.json()['ethereum']['usd']
                 eth_price = response.json()['price']
                 eth_price_metric.add_metric(['binance'], eth_price)
-                print(eth_price)
+                # print(eth_price)
         except requests.exceptions.ConnectionError:
             now = datetime.now()
             print(now.strftime("%Y-%m-%d %H:%M:%S"), "Except: ConnectionError")
