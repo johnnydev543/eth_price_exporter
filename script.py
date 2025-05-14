@@ -56,7 +56,7 @@ class DataCollector(object):
                 annualInterestRate = response.json()['data']['loanConfig'].get('annualInterestRate')
                 # print(marketapr)
                 usdt_apr_metric.add_metric(['binance'], marketApr)
-                usdt_loan_annualInterestRate.add_metric('binance', annualInterestRate)
+                usdt_loan_annualInterestRate.add_metric(['binance'], annualInterestRate)
         except requests.exceptions.ConnectionError:
             now = datetime.now()
             print(now.strftime("%Y-%m-%d %H:%M:%S"), "Except: ConnectionError")
